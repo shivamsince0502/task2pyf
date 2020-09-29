@@ -1,0 +1,54 @@
+#!/usr/bin/python3
+
+print("content-type:text.html")
+print()
+
+import subprocess as sb
+import cgi
+
+form = cgi.FieldStorage()
+
+cmd = form.getvalue("x")
+
+if "date" in cmd:
+  sb.getstatusoutput("date")
+elif "docker" and "run" in cmd:
+  out1 = sb.getstatusoutput("sudo docker run -dit --name myosnew centos:7")
+  print(out1[1])
+elif "cal" in cmd:
+  out2=sb.getstatusoutput("cal")
+  print(out2[1])
+elif "httpd" and "start" in cmd:
+  out3=sb.getstatusoutput("sudo systemctl start httpd")
+  print(out3[1])
+elif "httpd" and "stop" in cmd:
+  out4=sb.getstatusoutput("sudo systemctl stop httpd")
+  print(out4[1])
+elif "httpd" and "status" in cmd:
+  out5=sb.getstatusoutput("sudo systemctl status httpd")
+  print(out5[1])
+elif "docker" and "running" and "status" in cmd:
+  out6=sb.getstatusoutput("sudo docker inspect myosnew")
+  print(out6[1])
+elif "docker" and "images" in cmd:
+  out7=sb.getstatusoutput("sudo docker ps ")
+  print(out7[1])
+elif "docker" and "images" and "all" in cmd:
+  out8=sb.getstatusoutput("sudo docker ps -a ")
+  print(out8[1])
+elif "docker" and "start" in cmd:
+  out10=sb.getoutput("sudo systemctl start docker")
+  print("started docker")
+  print(out10)
+elif "docker" and "status" in cmd:
+  out11=sb.getoutput("sudo systemctl status docker")
+  print(out11)
+elif "docker" and "stop" in cmd:
+  out12=sb.getoutput("sudo systemctl stop docker")
+  print(out12)
+elif "using"and "ports" in cmd:
+  out13=sb.getstatusoutput("sudo netstat -tnlp")
+  print(out13[1])
+else:
+  out9=sb.getstatusoutput("sudo "+cmd)
+  print(out9[1])
